@@ -165,6 +165,63 @@ Future update_qno(q_no) async {
   }
 }
 
+Future getr3() async {
+  final response = await http.get(
+    Uri.parse('$api/Scorer3.php'),
+  );
+  if (response.statusCode == 200) {
+    ro = json.decode(response.body);
+    print(ro);
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
+
+Future update_round(currentround) async {
+  final response = await http.post(
+    Uri.parse('$api/updateRound.php'),
+    body: ({
+      "round": currentround,
+    }),
+  );
+  if (response.statusCode == 200) {
+    print("success");
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
+
+Future getQues() async {
+  final response = await http.get(
+    Uri.parse('$api/getQuestion.php'),
+  );
+  if (response.statusCode == 200) {
+    cur_ques = json.decode(response.body);
+    print(cur_ques[0]['question_no']);
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
+
+Future getr3info(qnumber) async {
+  final response = await http.post(
+    Uri.parse('$api/RapidControl.php'),
+    body: ({
+      "no": qnumber,
+    }),
+  );
+  if (response.statusCode == 200) {
+    rapidinfo = json.decode(response.body);
+    print("success");
+  } else {
+    print('Request failed with status: ${response.statusCode}');
+  }
+}
+
+
+
+
+
 
 
 

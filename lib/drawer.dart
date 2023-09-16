@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_admin/R2_Questions.dart';
+import 'package:quiz_admin/R3Scoreboard.dart';
 import 'package:quiz_admin/Soreboard.dart';
 import 'package:quiz_admin/questionCOntrol.dart';
+import 'package:quiz_admin/roundControl.dart';
 import 'package:quiz_admin/team_entry.dart';
 import 'package:quiz_admin/api_call.dart';
 import 'package:quiz_admin/R1_Questions.dart';
@@ -24,7 +26,9 @@ class _drawerState extends State<drawer> {
     r2Question(),
     const quiz(round1: false),
     const scoreboard(),
-    const questionControl()
+    const score_3(),
+    const questionControl(),
+    const roundcontrol()
   ];
 
   int selectedIndex = 0;
@@ -86,8 +90,16 @@ class _drawerState extends State<drawer> {
                 label: 'SCOREBOARD',
               ),
               SideNavigationBarItem(
+                icon: Icons.stacked_bar_chart_rounded,
+                label: 'RAPID SCOREBOARD',
+              ),
+              SideNavigationBarItem(
                 icon: Icons.question_answer,
                 label: 'QUESTION CONTROL',
+              ),
+              SideNavigationBarItem(
+                icon: Icons.radar_outlined,
+                label: 'ROUND CONTROL',
               ),
             ],
             onTap: (index) {

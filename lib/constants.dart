@@ -8,9 +8,13 @@ import 'package:flutter/widgets.dart';
 List teams = [];
 int team_id = 0;
 List urls = [];
+List ro = [];
+List rapidinfo = [];
 List score_board = [];
 var score_round = "R1_Performance";
 String? img, image1, image2, image3, image4;
+List rounds = ["MCQ ROUND", "PICTURE ROUND", "RAPID ROUND"];
+List cur_ques = [];
 
 Uint8List? url;
 Uint8List? url1, url2, url4, url3;

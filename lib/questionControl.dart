@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -14,6 +16,34 @@ class questionControl extends StatefulWidget {
 
 class _questionControlState extends State<questionControl> {
   int i = 0;
+  var count = "0", completed = "NO", answer = "NO";
+  late Timer _timer;
+  @override
+  void initState() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      getQues().whenComplete(() {
+        print(rapidinfo);
+        setState(() {
+          i = int.parse(cur_ques[0]['question_no']);
+          getr3info(i.toString()).whenComplete(() {
+            rapidinfo[0]['answer'] == "0" || rapidinfo[0]['answer'] == null
+                ? answer = "NO"
+                : answer = "YES";
+
+            rapidinfo[0]['attempted'] == rapidinfo[0]['total']
+                ? completed = "YES"
+                : completed = "NO";
+            rapidinfo[0]['attempted'] == "0" ||
+                    rapidinfo[0]['attempted'] == null
+                ? completed = "NO"
+                : completed = "YES";
+          });
+        });
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,21 +120,8 @@ class _questionControlState extends State<questionControl> {
                               fontWeight: FontWeight.w600)),
                       SizedBox(height: 30),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          MaterialButton(
-                              onPressed: () {
-                                if (i != 0) {
-                                  setState(() {
-                                    i = i - 1;
-                                    update_qno(i);
-                                  });
-                                }
-                              },
-                              child: Text("< Previous",
-                                  style: GoogleFonts.readexPro(
-                                      color: Colors.white)),
-                              color: Colors.red),
                           MaterialButton(
                               onPressed: () {
                                 if (i != 20) {
@@ -122,6 +139,39 @@ class _questionControlState extends State<questionControl> {
                       )
                     ],
                   )),
+              SizedBox(height: 35),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Attempt Count :   ",
+                        style: GoogleFonts.actor(
+                            color: Colors.white, fontSize: 20),
+                      ),
+                      Text(
+                        rapidinfo[0]['attempted'] == null
+                            ? "0"
+                            : rapidinfo[0]['attempted'],
+                        //rapidinfo[0]['attempted'],
+                        style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    "Answered :   " + answer,
+                    style: GoogleFonts.actor(color: Colors.white, fontSize: 20),
+                  ),
+                  Text(
+                    "Member Completed :   " + completed,
+                    style: GoogleFonts.actor(color: Colors.white, fontSize: 20),
+                  )
+                ],
+              )
             ]))
       ]))
     ])));
